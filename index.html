@@ -1,0 +1,2083 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Akmalxon Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b0b0c;
+            --band: #202021;
+            --ink: #f5f5f5;
+            --accent: #ff7a1a;
+            color-scheme: dark;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'Poppins', system-ui, sans-serif;
+            overflow-x: hidden
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        a:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px
+        }
+
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 560px;
+            overflow: hidden;
+            background: radial-gradient(ellipse at 30% 20%, #151516 0%, var(--bg) 60%)
+        }
+
+        /* Nav */
+        .nav {
+            position: absolute;
+            z-index: 6;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 96px;
+            padding: 0 clamp(20px, 3vw, 36px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .social {
+            display: flex;
+            gap: 14px
+        }
+
+        .nav-socials {
+            display: flex;
+            align-items: center;
+            gap: 18px
+        }
+
+        .social a {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: grid;
+            place-items: center;
+            color: #111
+        }
+
+        .social svg {
+            width: 12px;
+            height: 12px
+        }
+
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+            font-weight: 400;
+            letter-spacing: .02em;
+            color: #cfcfd1
+        }
+
+        .logo b {
+            color: var(--accent);
+            font-weight: 500
+        }
+
+        .menu {
+            list-style: none;
+            padding: 0;
+            display: flex
+        }
+
+        .menu a {
+            display: block;
+            padding: 0 clamp(14px, 2.2vw, 32px);
+            font-size: .68rem;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            border-left: 1px solid #3b3b3e
+        }
+
+        .menu li:first-child a {
+            border-left: 0
+        }
+
+        .menu li:last-child a {
+            padding-right: 0
+        }
+
+        .menu-toggle,
+        .menu-backdrop {
+            display: none
+        }
+
+        /* Language Switcher */
+        .lang-switch {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 2px;
+            gap: 2px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: #8e8e93;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: .06em;
+            padding: 5px 10px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all .2s ease;
+            line-height: 1;
+        }
+
+        .lang-btn:hover {
+            color: #fff;
+        }
+
+        .lang-btn.active {
+            background: var(--accent);
+            color: #111;
+        }
+
+        .desktop-lang {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-lang-row {
+            display: none;
+        }
+
+        /* Ghost word */
+        .ghost {
+            position: absolute;
+            z-index: 0;
+            left: 8.5%;
+            top: 13%;
+            font-size: clamp(9rem, 27vw, 27rem);
+            font-weight: 500;
+            line-height: 1;
+            color: transparent;
+            -webkit-text-stroke: 1px #1d1d1f;
+            user-select: none
+        }
+
+        /* Text */
+        .intro {
+            position: absolute;
+            z-index: 3;
+            left: clamp(20px, 9.2%, 140px);
+            top: clamp(120px, 21vh, 200px);
+            max-width: min(780px, 70%)
+        }
+
+        .intro h1 {
+            font-size: clamp(3.2rem, 8.2vw, 7.4rem);
+            font-weight: 300;
+            line-height: 1.05;
+            letter-spacing: -.01em;
+            white-space: nowrap
+        }
+
+        .intro p {
+            margin-top: clamp(36px, 9vh, 78px);
+            font-size: clamp(1.3rem, 3.1vw, 2.4rem);
+            font-weight: 400;
+            line-height: 1.7
+        }
+
+        .intro em {
+            font-style: normal;
+            color: var(--accent)
+        }
+
+        /* Ribbons */
+        .ribbon {
+            position: absolute;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            pointer-events: none
+        }
+
+        .track {
+            display: flex;
+            flex: none;
+            width: max-content
+        }
+
+        .track span {
+            display: flex;
+            align-items: center;
+            gap: clamp(34px, 4.4vw, 56px);
+            padding-right: clamp(34px, 4.4vw, 56px);
+            font-family: 'Roboto', sans-serif;
+            font-size: clamp(.95rem, 1.6vw, 1.25rem);
+            text-transform: uppercase;
+            white-space: nowrap
+        }
+
+        .track span::after {
+            content: "";
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex: none
+        }
+
+        @keyframes run {
+            to {
+                transform: translateX(-33.3333%)
+            }
+        }
+
+        .ribbon.b {
+            z-index: 1;
+            left: 50%;
+            top: 70%;
+            width: 175vw;
+            height: clamp(58px, 9.6vh, 76px);
+            background: linear-gradient(180deg, #232324, #1c1c1d);
+            color: #d9d9db;
+            transform: translate(-50%, -50%) rotate(-12deg)
+        }
+
+        .ribbon.b .track {
+            animation: run 60s linear infinite reverse;
+            padding-left: 20px
+        }
+
+        .ribbon.a {
+            z-index: 4;
+            left: 77.5%;
+            top: 38%;
+            width: 1700px;
+            height: 60px;
+            background: #fff;
+            color: #141414;
+            transform: translate(-50%, -50%) rotate(46deg);
+            border: 7px solid var(--bg);
+            box-shadow: 0 0 0 1px #000
+        }
+
+        .ribbon.a .track {
+            animation: run 55s linear infinite
+        }
+
+
+        /* Skills / 3D orbit */
+        .skills {
+            position: relative;
+            background: var(--bg)
+        }
+
+        .skills-head {
+            display: grid;
+            grid-template-columns: 1fr minmax(220px, 340px);
+            gap: 40px;
+            align-items: end;
+            padding: clamp(90px, 16vh, 170px) clamp(20px, 7vw, 110px) 30px
+        }
+
+        .skills-head h2 {
+            font-size: clamp(2.6rem, 7vw, 6.6rem);
+            font-weight: 500;
+            line-height: 1.02;
+            letter-spacing: -.03em
+        }
+
+        .skills-head h2 span {
+            display: block;
+            color: var(--accent)
+        }
+
+        .skills-head p {
+            color: #9a9a9f;
+            line-height: 1.65
+        }
+
+        .stage {
+            position: relative;
+            height: 260vh
+        }
+
+        .sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden
+        }
+
+        #globe {
+            display: block;
+            width: 100%;
+            height: 100%
+        }
+
+        .tag {
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 8px;
+            white-space: nowrap;
+            font-size: clamp(.8rem, 1.4vw, 1.05rem);
+            font-weight: 500;
+            cursor: pointer;
+            transform-origin: left center;
+            will-change: transform, opacity;
+            transition: color .2s
+        }
+
+        .tag i {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--c);
+            flex: none
+        }
+
+        .tag.on {
+            color: var(--c)
+        }
+
+        .hint {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 34px;
+            text-align: center;
+            font-size: .8rem;
+            letter-spacing: .06em;
+            color: #77777c;
+            transition: opacity .25s
+        }
+
+        .info {
+            position: absolute;
+            left: clamp(20px, 7vw, 110px);
+            bottom: 40px;
+            max-width: 300px;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity .25s, transform .25s;
+            pointer-events: none
+        }
+
+        .info.show {
+            opacity: 1;
+            transform: none
+        }
+
+        .info h3 {
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 500;
+            color: var(--c, #fff);
+            line-height: 1.1
+        }
+
+        .info p {
+            margin-top: 8px;
+            color: #a5a5aa;
+            font-size: .95rem
+        }
+
+        .hint.hide {
+            opacity: 0
+        }
+
+        @media (max-width:820px) {
+            .skills-head {
+                grid-template-columns: 1fr
+            }
+
+            .info {
+                bottom: 70px
+            }
+        }
+
+        @media (max-width:820px) {
+            .nav {
+                height: 72px;
+                padding: 0 16px;
+                z-index: 30
+            }
+
+            .logo {
+                font-size: 1.2rem;
+                pointer-events: none
+            }
+
+            .intro {
+                z-index: 5;
+                max-width: calc(100% - 32px);
+                left: 16px;
+                right: 16px;
+                top: 88px;
+                pointer-events: none
+            }
+
+            .intro h1 {
+                font-size: clamp(2rem, 9.5vw, 3.4rem)
+            }
+
+            .intro p {
+                margin-top: 18px;
+                font-size: clamp(1.05rem, 4.6vw, 1.35rem);
+                line-height: 1.55;
+                max-width: 22ch
+            }
+
+            .ghost {
+                top: 10%;
+                left: 4%;
+                font-size: 28vw;
+                opacity: .7
+            }
+
+            .ribbon.a {
+                top: 48%;
+                bottom: auto;
+                left: 50%;
+                width: 220vw;
+                height: 46px;
+                border-width: 5px;
+                transform: translate(-50%, -50%) rotate(-42deg);
+                z-index: 2;
+            }
+
+            .ribbon.b {
+                top: 65%;
+                bottom: auto;
+                left: 50%;
+                width: 240vw;
+                height: 48px;
+                transform: translate(-50%, -50%) rotate(30deg);
+                z-index: 1;
+            }
+
+            .menu-toggle {
+                display: grid;
+                place-items: center;
+                position: relative;
+                z-index: 40;
+                width: 44px;
+                height: 44px;
+                margin-right: -8px;
+                padding: 0;
+                border: 0;
+                background: transparent;
+                cursor: pointer
+            }
+
+            .menu-toggle span {
+                position: absolute;
+                left: 11px;
+                right: 11px;
+                height: 1.5px;
+                background: var(--ink);
+                border-radius: 2px;
+                transition: transform .28s ease, opacity .2s ease, top .28s ease
+            }
+
+            .menu-toggle span:nth-child(1) {
+                top: 16px
+            }
+
+            .menu-toggle span:nth-child(2) {
+                top: 21px
+            }
+
+            .menu-toggle span:nth-child(3) {
+                top: 26px
+            }
+
+            body.nav-open .menu-toggle span:nth-child(1) {
+                top: 21px;
+                transform: rotate(45deg)
+            }
+
+            body.nav-open .menu-toggle span:nth-child(2) {
+                opacity: 0
+            }
+
+            body.nav-open .menu-toggle span:nth-child(3) {
+                top: 21px;
+                transform: rotate(-45deg)
+            }
+
+            .menu-backdrop {
+                display: block;
+                position: fixed;
+                inset: 0;
+                z-index: 20;
+                background: rgba(0, 0, 0, .55);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity .25s ease
+            }
+
+            body.nav-open .menu-backdrop {
+                opacity: 1;
+                pointer-events: auto
+            }
+
+            .menu {
+                position: fixed;
+                z-index: 35;
+                top: 0;
+                right: 0;
+                width: min(78vw, 320px);
+                height: 100dvh;
+                margin: 0;
+                padding: 96px 28px 40px;
+                flex-direction: column;
+                gap: 4px;
+                background: #141416;
+                border-left: 1px solid #2a2a2e;
+                transform: translateX(104%);
+                transition: transform .32s cubic-bezier(.16, 1, .3, 1)
+            }
+
+            body.nav-open .menu {
+                transform: none
+            }
+
+            .menu a {
+                border-left: 0;
+                padding: 14px 0;
+                font-size: .82rem;
+                letter-spacing: .14em;
+                border-bottom: 1px solid #232326
+            }
+
+            .menu li:last-child a {
+                padding-right: 0;
+                border-bottom: 0
+            }
+
+            .desktop-lang {
+                display: none;
+            }
+
+            .menu-lang-row {
+                margin-top: auto;
+                padding-top: 24px;
+                border-top: 1px solid #232326;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .menu-lang-label {
+                font-size: .84rem;
+                letter-spacing: .08em;
+                text-transform: uppercase;
+                color: #8e8e93;
+                font-weight: 500;
+            }
+
+            .hero {
+                min-height: 100svh
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            .track {
+                animation: none !important
+            }
+
+            .project-desc-panel,
+            .project-desc-inner,
+            .project-desc-toggle::after {
+                transition: none !important
+            }
+        }
+
+        /* Projects section */
+        .projects {
+            position: relative;
+            background: var(--bg);
+            padding: clamp(70px, 12vh, 140px) clamp(20px, 7vw, 110px);
+            z-index: 5;
+            border-top: 1px solid #1f1f22;
+        }
+
+        .projects-head {
+            display: grid;
+            grid-template-columns: 1fr minmax(220px, 360px);
+            gap: 40px;
+            margin-bottom: clamp(40px, 7vh, 70px);
+        }
+
+        .projects-head h2 {
+            font-size: clamp(2.4rem, 5.5vw, 4.8rem);
+            font-weight: 500;
+            line-height: 1.05;
+            letter-spacing: -.03em;
+        }
+
+        .projects-head h2 span {
+            display: block;
+            color: var(--accent);
+        }
+
+        .projects-head p {
+            color: #9a9a9f;
+            line-height: 1.65;
+            align-self: end;
+            font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .project-card {
+            background: #111113;
+            border: 1px solid #232326;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform .3s cubic-bezier(0.16, 1, 0.3, 1), border-color .3s ease, box-shadow .3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 122, 26, 0.4);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+        }
+
+        .project-thumb {
+            position: relative;
+            width: 100%;
+            height: clamp(220px, 24vw, 300px);
+            background: #161619;
+            overflow: hidden;
+            display: block;
+            text-decoration: none;
+        }
+
+        .project-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            transition: transform .45s cubic-bezier(0.16, 1, 0.3, 1);
+            display: block;
+        }
+
+        .project-card:hover .project-thumb img {
+            transform: scale(1.035);
+        }
+
+        .project-card.is-natural .project-thumb {
+            height: auto;
+            aspect-ratio: 1152 / 866;
+            background: #0f0f12;
+        }
+
+        .project-card.is-natural .project-thumb img {
+            object-fit: contain;
+            object-position: center;
+        }
+
+        .project-card.is-natural:hover .project-thumb img {
+            transform: none;
+        }
+
+        .project-badge {
+            position: absolute;
+            bottom: 14px;
+            right: 14px;
+            background: rgba(12, 12, 14, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #ececec;
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.09em;
+            padding: 5px 11px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
+        .project-body {
+            padding: clamp(20px, 3vw, 28px);
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: 14px;
+        }
+
+        .project-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.74rem;
+            letter-spacing: 0.08em;
+        }
+
+        .project-num {
+            color: #636368;
+            font-weight: 500;
+        }
+
+        .project-cat {
+            color: var(--accent);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .project-title {
+            font-size: clamp(1.45rem, 2.3vw, 1.9rem);
+            font-weight: 500;
+            color: var(--ink);
+            letter-spacing: -0.02em;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .project-desc {
+            color: #9a9a9f;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0;
+            flex: 1;
+        }
+
+        .project-desc-toggle {
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: var(--accent);
+            font: inherit;
+            font-size: 0.84rem;
+            cursor: pointer;
+        }
+
+        .project-desc-toggle::after {
+            content: '+';
+            font-size: 1.1rem;
+            line-height: 1;
+            transition: transform .25s ease;
+        }
+
+        .project-card.is-open .project-desc-toggle::after {
+            transform: rotate(45deg);
+        }
+
+        .project-desc-toggle:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+        }
+
+        .project-desc-panel {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows .35s cubic-bezier(.16, 1, .3, 1);
+        }
+
+        .project-desc-inner {
+            min-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(-6px);
+            transition: opacity .25s ease, transform .35s cubic-bezier(.16, 1, .3, 1);
+        }
+
+        .project-card.is-open .project-desc-panel {
+            grid-template-rows: 1fr;
+        }
+
+        .project-card.is-open .project-desc-inner {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #1f1f22;
+            margin-top: auto;
+            flex-wrap: wrap;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .project-tag {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #c5c5c9;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 400;
+        }
+
+        .project-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--accent);
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            font-family: inherit;
+            padding: 6px 0;
+            transition: color .2s ease, transform .2s ease;
+            text-decoration: none;
+        }
+
+        .project-btn:hover {
+            color: #ff9d54;
+            transform: translateX(3px);
+        }
+
+        .project-btn svg {
+            width: 13px;
+            height: 13px;
+            transition: transform .2s ease;
+        }
+
+        .project-btn:hover svg {
+            transform: translate(2px, -2px);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: none;
+            place-items: center;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity .25s ease;
+        }
+
+        .modal-overlay.active {
+            display: grid;
+            opacity: 1;
+        }
+
+        .modal-card {
+            background: #141416;
+            border: 1px solid #2a2a2e;
+            border-radius: 20px;
+            max-width: 480px;
+            width: 100%;
+            padding: 32px 28px;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 122, 26, 0.2);
+            transform: scale(0.95);
+            transition: transform .25s ease;
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a0a0a5;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            line-height: 1;
+            transition: all .2s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.14);
+            color: #fff;
+        }
+
+        .modal-icon-wrap {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: rgba(255, 122, 26, 0.12);
+            border: 1px solid rgba(255, 122, 26, 0.25);
+            display: grid;
+            place-items: center;
+            margin-bottom: 18px;
+            color: var(--accent);
+        }
+
+        .modal-icon-wrap svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: var(--ink);
+            margin: 0 0 10px 0;
+            letter-spacing: -0.01em;
+        }
+
+        .modal-text {
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: #9a9a9f;
+            margin: 0 0 26px 0;
+        }
+
+        .modal-text strong {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .modal-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            padding: 11px 20px;
+            border-radius: 9px;
+            font-size: 0.88rem;
+            font-family: inherit;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .modal-btn.secondary {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #e0e0e0;
+        }
+
+        .modal-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+        }
+
+        .modal-btn.primary {
+            background: var(--accent);
+            border: 1px solid var(--accent);
+            color: #111;
+        }
+
+        .modal-btn.primary:hover {
+            background: #ff9142;
+            border-color: #ff9142;
+        }
+
+        @media (max-width:900px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-head {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        #skills,
+        #projects,
+        #contact {
+            scroll-margin-top: 12px;
+        }
+
+        .footer {
+            background: var(--bg);
+            border-top: 1px solid #1f1f22;
+            padding: clamp(56px, 10vh, 96px) clamp(20px, 7vw, 110px) 28px;
+            color: #9a9a9f;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr;
+            gap: 48px 32px;
+            align-items: start;
+            padding-bottom: 48px;
+            border-bottom: 1px solid #1f1f22;
+        }
+
+        .footer-brand .logo {
+            position: static;
+            transform: none;
+            display: inline-block;
+            font-size: 1.45rem;
+            color: var(--ink);
+        }
+
+        .footer-brand p {
+            margin-top: 14px;
+            max-width: 280px;
+            line-height: 1.65;
+            font-size: .92rem;
+        }
+
+        .footer-col h3 {
+            margin: 0 0 16px;
+            color: var(--ink);
+            font-size: .68rem;
+            font-weight: 500;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+        }
+
+        .footer-col a,
+        .footer-col span {
+            display: block;
+            padding: 6px 0;
+            font-size: .92rem;
+            color: #9a9a9f;
+            transition: color .2s ease;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .footer-social a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid #2a2a2e;
+            background: #141416;
+            display: grid;
+            place-items: center;
+            color: var(--ink);
+            padding: 0;
+            transition: border-color .2s ease, color .2s ease, background .2s ease;
+        }
+
+        .footer-social a:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(255, 122, 26, .08);
+        }
+
+        .footer-social svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .footer-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding-top: 22px;
+            font-size: .75rem;
+            letter-spacing: .04em;
+        }
+
+        .footer-bar a {
+            color: #cfcfd1;
+        }
+
+        .footer-bar a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width:820px) {
+            .footer-top {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                padding-bottom: 36px;
+            }
+
+            .footer {
+                padding: 56px 20px 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="hero" id="home">
+        <nav class="nav" aria-label="Main menu">
+            <div class="nav-socials">
+                <div class="desktop-lang">
+                    <div class="lang-switch" aria-label="Language">
+                        <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+                        <button type="button" class="lang-btn" data-lang="uz" aria-pressed="false">UZ</button>
+                    </div>
+                </div>
+                <div class="social">
+                <a href="https://t.me/Saidmurodow" aria-label="Telegram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M21.9 3.4 2.6 10.8c-1 .4-1 1.3-.2 1.5l4.9 1.5 1.9 5.8c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.8-.8L23.2 4.7c.3-1.3-.5-1.8-1.3-1.3zM9 13.4l9.3-5.9c.4-.3.8-.1.5.2l-7.6 6.9-.3 3.2z" />
+                    </svg></a>
+                <a href="https://instagram.com/akmalxon_cs" aria-label="Instagram" target="_blank" rel="noopener"><svg
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+                        <rect x="3" y="3" width="18" height="18" rx="5" />
+                        <circle cx="12" cy="12" r="4" />
+                        <circle cx="17.3" cy="6.7" r=".8" fill="currentColor" />
+                    </svg></a>
+                </div>
+            </div>
+            <a class="logo" href="#home">Akmalxon<b>.</b></a>
+            <button type="button" class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false"
+                aria-controls="mainMenu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="menu" id="mainMenu">
+                <li><a href="#home" data-i18n="navHome">Home</a></li>
+                <li><a href="#skills" data-i18n="navSkills">Skills</a></li>
+                <li><a href="#projects" data-i18n="navProjects">Projects</a></li>
+                <li><a href="#contact" data-i18n="navContact">Contact</a></li>
+                <li class="menu-lang-row">
+                    <span class="menu-lang-label" data-i18n="langLabel">Language:</span>
+                    <div class="lang-switch" aria-label="Language">
+                        <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+                        <button type="button" class="lang-btn" data-lang="uz" aria-pressed="false">UZ</button>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <div class="menu-backdrop" id="menuBackdrop"></div>
+
+        <div class="ghost" aria-hidden="true">dev</div>
+
+        <div class="intro">
+            <h1 data-i18n="heroGreeting">Hello World!</h1>
+            <p data-i18n-html="heroIntro">Welcome To My <em>Portfolio!</em> I’m Akmalxon, A <em>Frontend</em> Developer.</p>
+        </div>
+
+        <div class="ribbon b" aria-hidden="true">
+            <div class="track"
+                data-items-en="Responsive|Fast Loading|Pixel Perfect|Clean Code|Mobile First|Animations|SEO Friendly|Modern UI|Cross-Browser|User Friendly"
+                data-items-uz="Moslashuvchan|Tez yuklanish|Mukammal aniqlik|Toza kod|Avval mobil|Animatsiyalar|SEO uchun mos|Zamonaviy interfeys|Brauzerlararo|Foydalanishga qulay"
+                data-items="Responsive|Fast Loading|Pixel Perfect|Clean Code|Mobile First|Animations|SEO Friendly|Modern UI|Cross-Browser|User Friendly">
+            </div>
+        </div>
+        <div class="ribbon a" aria-hidden="true">
+            <div class="track"
+                data-items-en="Websites|Telegram Bots|UI/UX Design|Landing Pages|Online Stores|Admin Panels"
+                data-items-uz="Veb-saytlar|Telegram botlar|UI/UX dizayn|Taqdimot sahifalari|Onlayn do‘konlar|Boshqaruv panellari"
+                data-items="Websites|Telegram Bots|UI/UX Design|Landing Pages|Online Stores|Admin Panels">
+            </div>
+        </div>
+    </header>
+
+    <section class="skills">
+        <div class="skills-head">
+            <h2 data-i18n-html="skillsTitle">Built from curiosity, <span>shipped with clean code.</span></h2>
+            <p data-i18n="skillsDesc">The tools I reach for every day to turn an idea into a fast, responsive website that is easy to maintain.
+            </p>
+        </div>
+        <div class="stage" id="skills">
+            <div class="sticky">
+                <canvas id="globe" aria-label="3D model of technologies orbiting a rotating globe"
+                    data-i18n-aria="canvasLabel" role="img"></canvas>
+                <div class="hint" data-i18n="skillsHint">Hover a skill to inspect</div>
+                <div class="info" aria-live="polite">
+                    <h3></h3>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="projects-head">
+            <h2 data-i18n-html="projectsTitle">Featured Projects, <span>crafted with code.</span></h2>
+            <p data-i18n="projectsDesc">A collection of responsive web apps, 3D experiences, and interactive platforms built with modern tools.</p>
+        </div>
+        <div class="projects-grid">
+            <!-- 01 RunMap -->
+            <article class="project-card">
+                <div class="project-thumb">
+                    <img src="images/project-1-runmap.png" alt="RunMap" loading="lazy">
+                    <span class="project-badge" data-i18n="live01">LIVE / 01</span>
+                </div>
+                <div class="project-body">
+                    <div class="project-meta">
+                        <span class="project-num">01</span>
+                        <span class="project-cat" data-i18n="projectCat1">FITNESS / GAMIFICATION</span>
+                    </div>
+                    <h3 class="project-title">RunMap</h3>
+                    <button type="button" class="project-desc-toggle" aria-expanded="false"
+                        aria-controls="project-desc-1" data-i18n="showDescription">Read more</button>
+                    <div class="project-desc-panel" id="project-desc-1" aria-hidden="true">
+                        <div class="project-desc-inner">
+                            <p class="project-desc" data-i18n="projectDesc1">RunMap is an interactive web application that gamifies running workouts by
+                                allowing users to tag and capture territories. The project is built on Firebase Firestore for
+                                real-time data storage and Firebase Hosting for fast deployment.</p>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <div class="project-tags">
+                            <span class="project-tag">Firebase</span>
+                            <span class="project-tag">Firestore</span>
+                            <span class="project-tag">Leaflet</span>
+                            <span class="project-tag" data-i18n="tagRealtime">Realtime</span>
+                        </div>
+                        <a href="https://runmap-uz.web.app/" target="_blank" rel="noopener" class="project-btn">
+                            <span data-i18n="projectOpen">Open website</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17L17 7" />
+                                <path d="M7 7h10v10" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 02 Weather App -->
+            <article class="project-card">
+                <div class="project-thumb">
+                    <img src="images/project-2-weather.jpg" alt="Weather App (SkyCast)" loading="lazy">
+                    <span class="project-badge" data-i18n="live02">LIVE / 02</span>
+                </div>
+                <div class="project-body">
+                    <div class="project-meta">
+                        <span class="project-num">02</span>
+                        <span class="project-cat" data-i18n="projectCat2">WEATHER / DASHBOARD</span>
+                    </div>
+                    <h3 class="project-title">Weather App (SkyCast)</h3>
+                    <button type="button" class="project-desc-toggle" aria-expanded="false"
+                        aria-controls="project-desc-2" data-i18n="showDescription">Read more</button>
+                    <div class="project-desc-panel" id="project-desc-2" aria-hidden="true">
+                        <div class="project-desc-inner">
+                            <p class="project-desc" data-i18n="projectDesc2">A modern, responsive web application providing real-time weather data and
+                                multi-day forecasts for any city worldwide. Powered by REST API integration, it displays key
+                                meteorological metrics—including temperature, humidity, and wind speed—through a clean,
+                                intuitive interface.</p>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <div class="project-tags">
+                            <span class="project-tag">REST API</span>
+                            <span class="project-tag">OpenWeather</span>
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">CSS3</span>
+                        </div>
+                        <a href="https://weather-inky-iota-43.vercel.app/" target="_blank" rel="noopener"
+                            class="project-btn">
+                            <span data-i18n="projectOpen">Open website</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17L17 7" />
+                                <path d="M7 7h10v10" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 03 Online Flower Shop -->
+            <article class="project-card">
+                <div class="project-thumb">
+                    <img src="images/project-3-flowers.jpg" alt="Online Flower Shop" loading="lazy">
+                    <span class="project-badge" data-i18n="live03">LIVE / 03</span>
+                </div>
+                <div class="project-body">
+                    <div class="project-meta">
+                        <span class="project-num">03</span>
+                        <span class="project-cat" data-i18n="projectCat3">ECOMMERCE / FLORAL</span>
+                    </div>
+                    <h3 class="project-title">Online Flower Shop</h3>
+                    <button type="button" class="project-desc-toggle" aria-expanded="false"
+                        aria-controls="project-desc-3" data-i18n="showDescription">Read more</button>
+                    <div class="project-desc-panel" id="project-desc-3" aria-hidden="true">
+                        <div class="project-desc-inner">
+                            <p class="project-desc" data-i18n="projectDesc3">A sleek, responsive e-commerce web application designed for browsing curated
+                                floral collections, filtering by category, and placing seamless online orders. Features dynamic
+                                shopping cart management, intuitive product filtering, and a clean user interface optimized for
+                                desktop and mobile.</p>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <div class="project-tags">
+                            <span class="project-tag" data-i18n="tagEcommerce">E-Commerce</span>
+                            <span class="project-tag" data-i18n="tagCartUi">Cart UI</span>
+                            <span class="project-tag" data-i18n="tagCatalogFilter">Catalog Filter</span>
+                            <span class="project-tag" data-i18n="tagResponsive">Responsive</span>
+                        </div>
+                        <a href="https://lorem-flowers-w155.vercel.app/" target="_blank" rel="noopener"
+                            class="project-btn">
+                            <span data-i18n="projectOpen">Open website</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17L17 7" />
+                                <path d="M7 7h10v10" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 04 MebelSite -->
+            <article class="project-card">
+                <div class="project-thumb">
+                    <img src="images/project-4-furniture.jpg" alt="MebelSite" loading="lazy">
+                    <span class="project-badge" data-i18n="live04">LIVE / 04</span>
+                </div>
+                <div class="project-body">
+                    <div class="project-meta">
+                        <span class="project-num">04</span>
+                        <span class="project-cat" data-i18n="projectCat4">ECOMMERCE / FURNITURE</span>
+                    </div>
+                    <h3 class="project-title">MebelSite</h3>
+                    <button type="button" class="project-desc-toggle" aria-expanded="false"
+                        aria-controls="project-desc-4" data-i18n="showDescription">Read more</button>
+                    <div class="project-desc-panel" id="project-desc-4" aria-hidden="true">
+                        <div class="project-desc-inner">
+                            <p class="project-desc" data-i18n="projectDesc4">A feature-rich e-commerce web application built for browsing furniture
+                                catalogs, filtering products, and recommending personalized items through an interactive quiz
+                                system. Integrated with Supabase for backend data management, it delivers a seamless shopping
+                                cart experience.</p>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <div class="project-tags">
+                            <span class="project-tag">Supabase</span>
+                            <span class="project-tag">React</span>
+                            <span class="project-tag" data-i18n="tagQuiz">Quiz System</span>
+                            <span class="project-tag" data-i18n="tagCart">Cart</span>
+                        </div>
+                        <a href="https://hozrcha.vercel.app/" target="_blank" rel="noopener" class="project-btn">
+                            <span data-i18n="projectOpen">Open website</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17L17 7" />
+                                <path d="M7 7h10v10" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 05 ShopPlan 3D -->
+            <article class="project-card">
+                <div class="project-thumb">
+                    <img src="images/project-5-shopplan.jpg" alt="ShopPlan 3D" loading="lazy">
+                    <span class="project-badge" data-i18n="live05">LIVE / 05</span>
+                </div>
+                <div class="project-body">
+                    <div class="project-meta">
+                        <span class="project-num">05</span>
+                        <span class="project-cat" data-i18n="projectCat5">3D SPATIAL / COMMERCIAL</span>
+                    </div>
+                    <h3 class="project-title">ShopPlan 3D</h3>
+                    <button type="button" class="project-desc-toggle" aria-expanded="false"
+                        aria-controls="project-desc-5" data-i18n="showDescription">Read more</button>
+                    <div class="project-desc-panel" id="project-desc-5" aria-hidden="true">
+                        <div class="project-desc-inner">
+                            <p class="project-desc" data-i18n="projectDesc5">An interactive 3D and 2D spatial planning and real-time cost estimation web
+                                application for commercial spaces such as retail stores and fitness clubs. Built with React and
+                                3D JavaScript libraries, enabling users to customize dimensions, arrange equipment, and
+                                dynamically calculate startup estimates and ROI.</p>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <div class="project-tags">
+                            <span class="project-tag">Three.js</span>
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">3D WebGL</span>
+                            <span class="project-tag" data-i18n="tagRoi">ROI Tool</span>
+                        </div>
+                        <button type="button" class="project-btn js-shopplan-trigger" aria-haspopup="dialog">
+                            <span data-i18n="projectOpen">Open website</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17L17 7" />
+                                <path d="M7 7h10v10" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 06 Tarixiy -->
+            <article class="project-card is-natural">
+                <div class="project-thumb">
+                    <img src="images/Screenshot 2026-11-12 220331.png" alt="Tarixiy" loading="lazy">
+                    <span class="project-badge" data-i18n="live06">LIVE / 06</span>
+                </div>
+                <div class="project-body">
+                    <div class="project-meta">
+                        <span class="project-num">06</span>
+                        <span class="project-cat" data-i18n="projectCat6">EDTECH / GAMIFICATION</span>
+                    </div>
+                    <h3 class="project-title">Tarixiy</h3>
+                    <button type="button" class="project-desc-toggle" aria-expanded="false"
+                        aria-controls="project-desc-6" data-i18n="showDescription">Read more</button>
+                    <div class="project-desc-panel" id="project-desc-6" aria-hidden="true">
+                        <div class="project-desc-inner">
+                            <p class="project-desc" data-i18n="projectDesc6">An interactive, gamified history learning mobile application tailored to the
+                                grades 5–11 school curriculum in Uzbekistan. Enhances student engagement through interactive 2D
+                                and 3D maps, progress tracking, quizzes, a referral coin reward system, and Drako mascot.</p>
+                        </div>
+                    </div>
+                    <div class="project-footer">
+                        <div class="project-tags">
+                            <span class="project-tag" data-i18n="tagMobileWeb">Mobile Web</span>
+                            <span class="project-tag" data-i18n="tagGamification">Gamification</span>
+                            <span class="project-tag" data-i18n="tagInteractiveMaps">Interactive Maps</span>
+                            <span class="project-tag" data-i18n="tagQuizzes">Quizzes</span>
+                        </div>
+                        <a href="https://tarixiiy.vercel.app/" target="_blank" rel="noopener" class="project-btn">
+                            <span data-i18n="projectOpen">Open website</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M7 17L17 7" />
+                                <path d="M7 7h10v10" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Modal for ShopPlan 3D Desktop Warning -->
+    <div id="desktopModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true"
+        aria-labelledby="modalTitle">
+        <div class="modal-card">
+            <button type="button" class="modal-close" id="modalCloseBtn" aria-label="Close"
+                data-i18n-aria="closeLabel">&times;</button>
+            <div class="modal-icon-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>
+            </div>
+            <h3 id="modalTitle" class="modal-title" data-i18n="modalTitle">Attention: Designed for computers</h3>
+            <p class="modal-text" data-i18n-html="modalText">
+                <strong>ShopPlan 3D</strong> is designed for <strong>computers and laptops</strong> because it includes
+                complex 3D graphics, room planning, and interactive calculation tools. It may not work fully on mobile devices.
+            </p>
+            <div class="modal-actions">
+                <button type="button" class="modal-btn secondary" id="modalCancelBtn" data-i18n="modalCancel">Cancel</button>
+                <a href="https://shop-plan3d.vercel.app/" target="_blank" rel="noopener" class="modal-btn primary"
+                    id="modalProceedBtn">
+                    <span data-i18n="modalProceed">Open anyway</span>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M7 17L17 7" />
+                        <path d="M7 7h10v10" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer" id="contact">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a class="logo" href="#home">Akmalxon<b>.</b></a>
+                <p data-i18n="footerBio">Frontend developer. Clean interfaces, fast websites, and work that is easy to maintain.</p>
+            </div>
+            <div class="footer-col">
+                <h3 data-i18n="footerNavigate">Navigate</h3>
+                <a href="#home" data-i18n="navHome">Home</a>
+                <a href="#skills" data-i18n="navSkills">Skills</a>
+                <a href="#projects" data-i18n="navProjects">Projects</a>
+            </div>
+            <div class="footer-col">
+                <h3 data-i18n="navContact">Contact</h3>
+                <span data-i18n="footerContact">Let’s talk about your next project.</span>
+                <div class="footer-social">
+                    <a href="https://t.me/Saidmurodow" aria-label="Telegram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"
+                            fill="currentColor">
+                            <path
+                                d="M21.9 3.4 2.6 10.8c-1 .4-1 1.3-.2 1.5l4.9 1.5 1.9 5.8c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.8-.8L23.2 4.7c.3-1.3-.5-1.8-1.3-1.3zM9 13.4l9.3-5.9c.4-.3.8-.1.5.2l-7.6 6.9-.3 3.2z" />
+                        </svg></a>
+                    <a href="https://instagram.com/akmalxon_cs" aria-label="Instagram" target="_blank"
+                        rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+                            <rect x="3" y="3" width="18" height="18" rx="5" />
+                            <circle cx="12" cy="12" r="4" />
+                            <circle cx="17.3" cy="6.7" r=".8" fill="currentColor" />
+                        </svg></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bar">
+            <span>© 2026 Akmalxon</span>
+            <a href="#home" data-i18n="backToTop">Back to top</a>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        (function () {
+            if (!window.THREE) return;
+            var T = [
+                ['HTML', 'Semantic structure behind every page.', '#ff5b2e', 0],
+                ['CSS', 'Layouts, motion and responsive design.', '#2f6bff', 0],
+                ['JavaScript', 'Logic and interactivity.', '#f7c600', 0],
+                ['React', 'Component-based interfaces.', '#35c4e8', 0],
+                ['Git', 'Version control for every project.', '#f05133', 0],
+                ['Tailwind', 'Utility-first styling, built fast.', '#38bdf8', 1],
+                ['Vite', 'Instant dev server and quick builds.', '#a855f7', 1],
+                ['Redux Toolkit', 'State management for bigger apps.', '#764abc', 1],
+                ['React Query', 'Server data caching and syncing.', '#ff4154', 1],
+                ['Zustand', 'Lightweight state for 3D and UI.', '#b8860b', 1],
+                ['Node.js', 'JavaScript runtime environment for backend development.', '#539e43', 2],
+                ['SQL', 'Relational database queries and data architecture.', '#0284c7', 2],
+                ['Supabase', 'Database, auth and file storage.', '#3ecf8e', 2],
+                ['Firebase', 'Realtime data and sign-in.', '#ffa000', 2],
+                ['REST API', 'Fetching data, like OpenWeather.', '#ff9e5e', 2],
+                ['Telegram Bots', 'Orders and notifications for clients.', '#2aabee', 2],
+                ['Leaflet', 'Interactive maps and GPS tracks.', '#4ade80', 2],
+                ['Three.js', '3D scenes right in the browser.', '#f2f2f2', 3],
+                ['React Three Fiber', 'React renderer for 3D, used in SmartSpace.', '#d946ef', 3],
+                ['GitHub', 'Code hosting and deploys.', '#8b5cf6', 3],
+                ['Vercel', 'Hosting with instant deploys.', '#ffffff', 3],
+                ['Netlify', 'Static hosting for quick launches.', '#00c7b7', 3]];
+            var R = [3.3, 4.6, 5.9, 7.2], SP = [.32, -.22, .16, -.11];
+
+            /* Simplified logo badges drawn on canvas */
+            var GH = 'M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z';
+            var TG = 'M21.9 3.4 2.6 10.8c-1 .4-1 1.3-.2 1.5l4.9 1.5 1.9 5.8c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.8-.8L23.2 4.7c.3-1.3-.5-1.8-1.3-1.3zM9 13.4l9.3-5.9c.4-.3.8-.1.5.2l-7.6 6.9-.3 3.2z';
+            var TW = 'M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z';
+            var DARK = ['JavaScript', 'Three.js', 'Vercel', 'Leaflet', 'REST API', 'Netlify'];
+            function logo(name) {
+                var c = document.createElement('canvas'); c.width = c.height = 128; var x = c.getContext('2d');
+                var fg = DARK.indexOf(name) >= 0 ? '#111' : '#fff';
+                x.fillStyle = x.strokeStyle = fg; x.lineWidth = 7; x.lineCap = x.lineJoin = 'round'; x.translate(64, 64);
+                function txt(t, size) { x.font = '700 ' + size + 'px Poppins,Roboto,sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(t, 0, 4) }
+                function path(d, vb) { x.save(); var k = 84 / vb; x.scale(k, k); x.translate(-vb / 2, -vb / 2); x.fill(new Path2D(d)); x.restore() }
+                function poly(a) { x.beginPath(); a.forEach(function (q, i) { i ? x.lineTo(q[0], q[1]) : x.moveTo(q[0], q[1]) }); x.closePath(); x.fill() }
+                function dot(px, py, r) { x.beginPath(); x.arc(px, py, r, 0, 7); x.fill() }
+                switch (name) {
+                    case 'HTML': txt('</>', 50); break;
+                    case 'CSS': txt('#', 86); break;
+                    case 'JavaScript': txt('JS', 66); break;
+                    case 'React': x.lineWidth = 6; for (var k = 0; k < 3; k++) { x.save(); x.rotate(k * Math.PI / 3); x.beginPath(); x.ellipse(0, 0, 44, 17, 0, 0, 7); x.stroke(); x.restore() } dot(0, 0, 9); break;
+                    case 'Git': x.beginPath(); x.moveTo(-22, -30); x.lineTo(-22, 30); x.moveTo(-22, -6); x.lineTo(24, -24); x.stroke(); dot(-22, -30, 11); dot(-22, 30, 11); dot(24, -24, 11); break;
+                    case 'Tailwind': path(TW, 24); break;
+                    case 'Vite': poly([[26, -46], [-30, 6], [-2, 6], [-24, 46], [30, -8], [2, -8]]); break;
+                    case 'Redux Toolkit': txt('RTK', 42); break;
+                    case 'React Query': txt('RQ', 56); break;
+                    case 'Zustand': txt('Z', 84); break;
+                    case 'Node.js': txt('Node', 40); break;
+                    case 'SQL': txt('SQL', 48); break;
+                    case 'Supabase': poly([[8, -46], [-34, 10], [-4, 10], [-8, 46], [34, -10], [4, -10]]); break;
+                    case 'Firebase': x.beginPath(); x.moveTo(0, -46); x.bezierCurveTo(30, -18, 42, 6, 28, 28); x.bezierCurveTo(20, 44, -20, 44, -28, 28); x.bezierCurveTo(-38, 8, -14, -8, 0, -46); x.fill(); break;
+                    case 'REST API': txt('API', 46); break;
+                    case 'Telegram Bots': path(TG, 24); break;
+                    case 'Leaflet': x.beginPath(); x.moveTo(-36, 36); x.bezierCurveTo(-42, -20, 0, -44, 38, -38); x.bezierCurveTo(46, 0, 16, 40, -36, 36); x.fill(); break;
+                    case 'Three.js': x.beginPath(); x.moveTo(0, -42); x.lineTo(-36, 34); x.lineTo(36, 34); x.closePath(); x.stroke(); x.beginPath(); x.moveTo(0, -42); x.lineTo(0, 12); x.moveTo(-36, 34); x.lineTo(0, 12); x.moveTo(36, 34); x.lineTo(0, 12); x.stroke(); break;
+                    case 'React Three Fiber': txt('R3F', 46); break;
+                    case 'GitHub': path(GH, 16); break;
+                    case 'Vercel': poly([[0, -40], [-44, 34], [44, 34]]); break;
+                    case 'Netlify': poly([[0, -44], [44, 0], [0, 44], [-44, 0]]); break;
+                }
+                var tx = new THREE.CanvasTexture(c); tx.anisotropy = 4; return tx;
+            }
+            var wrap = document.querySelector('.sticky'), stage = document.querySelector('.stage'), canvas = document.getElementById('globe');
+            var hint = document.querySelector('.hint'), info = document.querySelector('.info');
+            var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+            var scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(40, 1, .1, 300);
+            scene.add(new THREE.AmbientLight(0xffffff, .8));
+            var sun = new THREE.DirectionalLight(0xffffff, 1.1); sun.position.set(6, 7, 9); scene.add(sun);
+            var world = new THREE.Group(); scene.add(world);
+
+            /* Globe tilted like Earth, spinning on its axis */
+            var earth = new THREE.Group(); earth.rotation.z = 23.5 * Math.PI / 180; world.add(earth);
+            var spin = new THREE.Group(); earth.add(spin);
+            spin.add(new THREE.Mesh(new THREE.SphereGeometry(1.7, 48, 32), new THREE.MeshStandardMaterial({ color: 0x121213, roughness: .85 })));
+            spin.add(new THREE.Mesh(new THREE.SphereGeometry(1.705, 24, 16), new THREE.MeshBasicMaterial({ color: 0xff7a1a, wireframe: true, transparent: true, opacity: .1 })));
+            var pts = [], N = 2600, ga = Math.PI * (3 - Math.sqrt(5));
+            for (var i = 0; i < N; i++) {
+                var y = 1 - 2 * (i + .5) / N, r = Math.sqrt(1 - y * y), th = ga * i, x = Math.cos(th) * r, z = Math.sin(th) * r;
+                var lat = Math.asin(y), lon = Math.atan2(z, x), n = Math.sin(lat * 3 + 1.3) * Math.cos(lon * 2 + .4) + .6 * Math.sin(lon * 4 - lat * 2) + .3 * Math.cos(lat * 7 + lon);
+                if (n > .25) pts.push(x * 1.72, y * 1.72, z * 1.72);
+            }
+            var pg = new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+            spin.add(new THREE.Points(pg, new THREE.PointsMaterial({ color: 0xff7a1a, size: .04 })));
+            var ag = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, -2.7, 0), new THREE.Vector3(0, 2.7, 0)]);
+            earth.add(new THREE.Line(ag, new THREE.LineBasicMaterial({ color: 0xff7a1a, transparent: true, opacity: .75 })));
+            var gc = document.createElement('canvas'); gc.width = gc.height = 128;
+            var gx = gc.getContext('2d'), gr = gx.createRadialGradient(64, 64, 10, 64, 64, 64);
+            gr.addColorStop(0, 'rgba(255,122,26,.55)'); gr.addColorStop(1, 'rgba(255,122,26,0)');
+            gx.fillStyle = gr; gx.fillRect(0, 0, 128, 128);
+            var glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(gc), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }));
+            glow.scale.set(7.4, 7.4, 1); world.add(glow);
+
+            /* Orbit rings */
+            var rings = new THREE.Group(); world.add(rings);
+            R.forEach(function (rad, k) {
+                var p = []; for (var a = 0; a < 128; a++) { var t = a / 128 * Math.PI * 2; p.push(new THREE.Vector3(Math.cos(t) * rad, 0, Math.sin(t) * rad)); }
+                rings.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(p), new THREE.LineBasicMaterial({ color: k === 0 ? 0xff7a1a : 0x8a8a8e, transparent: true, opacity: k === 0 ? .55 : .28 })));
+            });
+
+            /* Stars */
+            var sp = []; for (var j = 0; j < 600; j++) { var u = Math.random() * Math.PI * 2, v = Math.acos(2 * Math.random() - 1), d = 30 + Math.random() * 60; sp.push(d * Math.sin(v) * Math.cos(u), d * Math.cos(v), d * Math.sin(v) * Math.sin(u)); }
+            var sg = new THREE.BufferGeometry(); sg.setAttribute('position', new THREE.Float32BufferAttribute(sp, 3));
+            scene.add(new THREE.Points(sg, new THREE.PointsMaterial({ color: 0x9a9a9f, size: .12, transparent: true, opacity: .7 })));
+
+            /* Planets + labels */
+            var ringCounts = [0, 0, 0, 0], ringIndices = [];
+            T.forEach(function (t) {
+                var r = t[3];
+                ringIndices.push(ringCounts[r]);
+                ringCounts[r]++;
+            });
+
+            var planets = [], hover = -1;
+            T.forEach(function (t, i) {
+                var c = new THREE.Color(t[2]);
+                var m = new THREE.Mesh(new THREE.SphereGeometry(.3, 24, 16), new THREE.MeshStandardMaterial({ color: c, emissive: c, emissiveIntensity: .35, roughness: .4 }));
+                world.add(m);
+                var sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: logo(t[0]), transparent: true, depthWrite: false })); sp.scale.set(.52, .52, 1); m.add(sp);
+                var el = document.createElement('div'); el.className = 'tag'; el.style.setProperty('--c', t[2]);
+                el.innerHTML = '<i></i>' + t[0]; wrap.appendChild(el);
+                el.addEventListener('mouseenter', function () { setHover(i) });
+                el.addEventListener('mouseleave', function () { setHover(-1) });
+                el.addEventListener('touchstart', function () { setHover(hover === i ? -1 : i) }, { passive: true });
+                var posOnRing = ringIndices[i], totalOnRing = ringCounts[t[3]];
+                planets.push({ m: m, sp: sp, el: el, ring: t[3], base: (posOnRing / totalOnRing) * Math.PI * 2 + t[3] * .8 });
+            });
+            function setHover(i) {
+                hover = i;
+                planets.forEach(function (p, k) { p.el.classList.toggle('on', k === i) });
+                if (i >= 0) {
+                    var skill = T[i][0];
+                    var descriptions = window.siteLanguage === 'uz' ? window.techDescriptionsUz : window.techDescriptionsEn;
+                    info.style.setProperty('--c', T[i][2]);
+                    info.querySelector('h3').textContent = skill;
+                    info.querySelector('p').textContent = descriptions[skill] || T[i][1];
+                }
+                info.classList.toggle('show', i >= 0); hint.classList.toggle('hide', i >= 0);
+            }
+
+            var W = 1, H = 1, D = 15;
+            function resize() {
+                W = wrap.clientWidth; H = wrap.clientHeight;
+                renderer.setSize(W, H, false); camera.aspect = W / H;
+                D = Math.min(34, Math.max(15, 8.8 / (Math.tan(20 * Math.PI / 180) * camera.aspect)));
+                camera.updateProjectionMatrix();
+            }
+            addEventListener('resize', resize); resize();
+
+            var mx = 0; addEventListener('pointermove', function (e) { mx = e.clientX / innerWidth - .5 });
+            var vis = true;
+            if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { vis = e[0].isIntersecting }, { rootMargin: '120px' }).observe(stage);
+
+            var clock = new THREE.Clock(), tm = 0, spinT = 0, sf = 1, v = new THREE.Vector3(), cam = new THREE.Vector3();
+            function clamp(x, a, b) { return Math.max(a, Math.min(b, x)) }
+            function ease(x) { return x * x * (3 - 2 * x) }
+            function loop() {
+                requestAnimationFrame(loop);
+                var dt = Math.min(clock.getDelta(), .05); if (!vis) return;
+                sf += ((hover >= 0 ? .08 : 1) - sf) * Math.min(1, dt * 5);
+                if (!reduce) { tm += dt * sf; spinT += dt * .35; }
+                spin.rotation.y = spinT;
+                var rc = stage.getBoundingClientRect(), p = clamp(-rc.top / (rc.height - innerHeight), 0, 1);
+                var e = ease(p), open = ease(clamp(p * 2.2, 0, 1)), s = .3 + .7 * open;
+                var elev = 1.12 - .78 * e;
+                camera.position.set(0, Math.sin(elev) * D, Math.cos(elev) * D); camera.lookAt(0, 0, 0);
+                world.rotation.y += ((mx * .5) - world.rotation.y) * .05; world.rotation.z = -.14 * e;
+                rings.scale.setScalar(s);
+                scene.updateMatrixWorld();
+                var fade = clamp(p * 8, 0, 1) * (.25 + .75 * open);
+                planets.forEach(function (pl, k) {
+                    var a = pl.base + tm * SP[pl.ring], rad = R[pl.ring] * s;
+                    pl.m.position.set(Math.cos(a) * rad, 0, Math.sin(a) * rad); pl.m.updateMatrixWorld();
+                    v.setFromMatrixPosition(pl.m.matrixWorld);
+                    var f = clamp((D + 7.2 - camera.position.distanceTo(v)) / 14.4, 0, 1);
+                    v.project(camera);
+                    var x = (v.x * .5 + .5) * W, y = (-v.y * .5 + .5) * H;
+                    pl.m.scale.setScalar((.8 + .5 * f) * (k === hover ? 1.5 : 1));
+                    pl.m.material.emissiveIntensity = k === hover ? .9 : .35;
+                    cam.copy(camera.position); pl.m.worldToLocal(cam).normalize().multiplyScalar(.32); pl.sp.position.copy(cam);
+                    pl.el.style.transform = 'translate(' + (x + 12).toFixed(1) + 'px,' + (y - 14).toFixed(1) + 'px) scale(' + (.85 + .25 * f).toFixed(3) + ')';
+                    pl.el.style.opacity = ((.3 + .7 * f) * fade).toFixed(3);
+                    pl.el.style.zIndex = Math.round(f * 10);
+                });
+                renderer.render(scene, camera);
+            }
+            loop();
+        })();
+    </script>
+    <script>
+        document.querySelectorAll('.track').forEach(function (t) {
+            var set = t.dataset.items.split('|').map(function (w) { return '<span>' + w + '</span>' }).join('');
+            t.innerHTML = set + set + set;
+        });
+    </script>
+    <script>
+        (function () {
+            var translations = {
+                en: {
+                    pageTitle: 'Akmalxon Portfolio',
+                    navHome: 'Home', navSkills: 'Skills', navProjects: 'Projects', navContact: 'Contact',
+                    langLabel: 'Language:',
+                    heroGreeting: 'Hello World!',
+                    heroIntro: 'Welcome To My <em>Portfolio!</em> I’m Akmalxon, A <em>Frontend</em> Developer.',
+                    skillsTitle: 'Built from curiosity, <span>shipped with clean code.</span>',
+                    skillsDesc: 'The tools I reach for every day to turn an idea into a fast, responsive website that is easy to maintain.',
+                    skillsHint: 'Hover a skill to inspect',
+                    projectsTitle: 'Featured Projects, <span>crafted with code.</span>',
+                    projectsDesc: 'A collection of responsive web apps, 3D experiences, and interactive platforms built with modern tools.',
+                    canvasLabel: '3D model of technologies orbiting a rotating globe',
+                    closeLabel: 'Close',
+                    live01: 'LIVE / 01', live02: 'LIVE / 02', live03: 'LIVE / 03',
+                    live04: 'LIVE / 04', live05: 'LIVE / 05', live06: 'LIVE / 06',
+                    projectCat1: 'FITNESS / GAMIFICATION',
+                    projectDesc1: 'RunMap is an interactive web application that gamifies running workouts by allowing users to tag and capture territories. The project is built on Firebase Firestore for real-time data storage and Firebase Hosting for fast deployment.',
+                    projectCat2: 'WEATHER / DASHBOARD',
+                    projectDesc2: 'A modern, responsive web application providing real-time weather data and multi-day forecasts for any city worldwide. Powered by REST API integration, it displays key meteorological metrics—including temperature, humidity, and wind speed—through a clean, intuitive interface.',
+                    projectCat3: 'ECOMMERCE / FLORAL',
+                    projectDesc3: 'A sleek, responsive e-commerce web application designed for browsing curated floral collections, filtering by category, and placing seamless online orders. Features dynamic shopping cart management, intuitive product filtering, and a clean user interface optimized for desktop and mobile.',
+                    projectCat4: 'ECOMMERCE / FURNITURE',
+                    projectDesc4: 'A feature-rich e-commerce web application built for browsing furniture catalogs, filtering products, and recommending personalized items through an interactive quiz system. Integrated with Supabase for backend data management, it delivers a seamless shopping cart experience.',
+                    projectCat5: '3D SPATIAL / COMMERCIAL',
+                    projectDesc5: 'An interactive 3D and 2D spatial planning and real-time cost estimation web application for commercial spaces such as retail stores and fitness clubs. Built with React and 3D JavaScript libraries, enabling users to customize dimensions, arrange equipment, and dynamically calculate startup estimates and ROI.',
+                    projectCat6: 'EDTECH / GAMIFICATION',
+                    projectDesc6: 'An interactive, gamified history learning mobile application tailored to the grades 5–11 school curriculum in Uzbekistan. Enhances student engagement through interactive 2D and 3D maps, progress tracking, quizzes, a referral coin reward system, and Drako mascot.',
+                    projectOpen: 'Open website',
+                    showDescription: 'Read more',
+                    hideDescription: 'Read less',
+                    tagRealtime: 'Realtime',
+                    tagEcommerce: 'E-Commerce',
+                    tagCartUi: 'Cart UI',
+                    tagCatalogFilter: 'Catalog Filter',
+                    tagResponsive: 'Responsive',
+                    tagQuiz: 'Quiz System',
+                    tagCart: 'Cart',
+                    tagRoi: 'ROI Tool',
+                    tagMobileWeb: 'Mobile Web',
+                    tagGamification: 'Gamification',
+                    tagInteractiveMaps: 'Interactive Maps',
+                    tagQuizzes: 'Quizzes',
+                    modalTitle: 'Attention: Designed for computers',
+                    modalText: '<strong>ShopPlan 3D</strong> is designed for <strong>computers and laptops</strong> because it includes complex 3D graphics, room planning, and interactive calculation tools. It may not work fully on mobile devices.',
+                    modalCancel: 'Cancel', modalProceed: 'Open anyway',
+                    footerBio: 'Frontend developer. Clean interfaces, fast websites, and work that is easy to maintain.',
+                    footerNavigate: 'Navigate',
+                    footerContact: 'Let’s talk about your next project.',
+                    backToTop: 'Back to top'
+                },
+                uz: {
+                    pageTitle: 'Akmalxon portfoliosi',
+                    navHome: 'Bosh sahifa', navSkills: 'Ko‘nikmalar', navProjects: 'Loyihalar', navContact: 'Aloqa',
+                    langLabel: 'Til:',
+                    heroGreeting: 'Salom, dunyo!',
+                    heroIntro: 'Mening <em>portfoliomga</em> xush kelibsiz! Men Akmalxon, <em>frontend</em> dasturchisiman.',
+                    skillsTitle: 'Qiziqish bilan yaratildi, <span>toza kod bilan ishga tushirildi.</span>',
+                    skillsDesc: 'G‘oyalarni tezkor, moslashuvchan va qo‘llab-quvvatlash oson bo‘lgan veb-saytlarga aylantirishda har kuni foydalanadigan vositalarim.',
+                    skillsHint: 'Batafsil ko‘rish uchun ko‘nikma ustiga olib boring',
+                    projectsTitle: 'Tanlangan loyihalar, <span>kod bilan yaratildi.</span>',
+                    projectsDesc: 'Zamonaviy vositalar yordamida yaratilgan moslashuvchan veb-ilovalar, 3D tajribalar va interaktiv platformalar to‘plami.',
+                    canvasLabel: 'Aylanayotgan globus atrofida harakatlanuvchi texnologiyalarning 3D modeli',
+                    closeLabel: 'Yopish',
+                    live01: 'ISHLAYDI / 01', live02: 'ISHLAYDI / 02', live03: 'ISHLAYDI / 03',
+                    live04: 'ISHLAYDI / 04', live05: 'ISHLAYDI / 05', live06: 'ISHLAYDI / 06',
+                    projectCat1: 'FITNES / O‘YINLASHTIRISH',
+                    projectDesc1: 'RunMap — yugurish mashg‘ulotlarini o‘yinga aylantiruvchi interaktiv veb-ilova. Foydalanuvchilar hududlarni belgilab, egallashlari mumkin. Loyiha real vaqt ma’lumotlari uchun Firebase Firestore va tez joylashtirish uchun Firebase Hosting’dan foydalanadi.',
+                    projectCat2: 'OB-HAVO / BOSHQARUV PANELI',
+                    projectDesc2: 'Dunyoning istalgan shahri uchun real vaqt ob-havo ma’lumotlari va bir necha kunlik prognozlarni taqdim etuvchi zamonaviy, moslashuvchan veb-ilova. REST API orqali harorat, namlik va shamol tezligi kabi muhim ko‘rsatkichlarni sodda va tushunarli interfeysda ko‘rsatadi.',
+                    projectCat3: 'ONLAYN SAVDO / GULLAR',
+                    projectDesc3: 'Gullar to‘plamini ko‘rish, toifalar bo‘yicha saralash va onlayn buyurtma berish uchun yaratilgan zamonaviy, moslashuvchan internet-do‘kon. Unda dinamik savat, qulay mahsulot filtrlari va kompyuter hamda telefonlarga mos interfeys mavjud.',
+                    projectCat4: 'ONLAYN SAVDO / MEBEL',
+                    projectDesc4: 'Mebel katalogini ko‘rish, mahsulotlarni saralash va interaktiv so‘rovnoma orqali mos tavsiyalar olish imkonini beruvchi internet-do‘kon. Supabase bilan integratsiya qilingan bo‘lib, qulay xarid savatini taqdim etadi.',
+                    projectCat5: '3D REJALASHTIRISH / BIZNES',
+                    projectDesc5: 'Do‘kon va fitnes klublari kabi tijorat joylarini 2D va 3D formatda rejalashtirish hamda xarajatlarni real vaqtda hisoblash uchun interaktiv veb-ilova. React va 3D JavaScript kutubxonalari yordamida yaratilgan: o‘lchamlarni o‘zgartirish, jihozlarni joylashtirish va boshlang‘ich xarajatlarni hisoblash mumkin.',
+                    projectCat6: 'TA’LIM TEXNOLOGIYALARI / O‘YINLASHTIRISH',
+                    projectDesc6: 'O‘zbekiston maktablarining 5–11-sinf dasturiga mos interaktiv va o‘yinlashtirilgan tarix o‘rgatuvchi mobil ilova. 2D va 3D xaritalar, o‘quv jarayoni kuzatuvi, viktorinalar, takliflar uchun bonus tangalar va Drako qahramoni orqali o‘quvchilar faolligini oshiradi.',
+                    projectOpen: 'Saytni ochish',
+                    showDescription: 'Batafsil',
+                    hideDescription: 'Yopish',
+                    tagRealtime: 'Real vaqt',
+                    tagEcommerce: 'Internet-do‘kon',
+                    tagCartUi: 'Savat interfeysi',
+                    tagCatalogFilter: 'Katalog filtri',
+                    tagResponsive: 'Moslashuvchan',
+                    tagQuiz: 'Viktorina tizimi',
+                    tagCart: 'Xarid savati',
+                    tagRoi: 'Daromadlilik hisobi',
+                    tagMobileWeb: 'Mobil veb',
+                    tagGamification: 'O‘yinlashtirish',
+                    tagInteractiveMaps: 'Interaktiv xaritalar',
+                    tagQuizzes: 'Viktorinalar',
+                    modalTitle: 'Diqqat: Kompyuter uchun mo‘ljallangan',
+                    modalText: '<strong>ShopPlan 3D</strong> murakkab 3D grafikalar, xona rejalashtirish va interaktiv hisob-kitob vositalarini o‘z ichiga olgani uchun <strong>kompyuter va noutbuklar</strong> uchun mo‘ljallangan. Mobil qurilmalarda to‘liq ishlamasligi mumkin.',
+                    modalCancel: 'Bekor qilish', modalProceed: 'Baribir ochish',
+                    footerBio: 'Frontend dasturchi. Sodda interfeyslar, tezkor veb-saytlar va qo‘llab-quvvatlash oson bo‘lgan yechimlar.',
+                    footerNavigate: 'Bo‘limlar',
+                    footerContact: 'Keyingi loyihangiz haqida suhbatlashamiz.',
+                    backToTop: 'Yuqoriga qaytish'
+                }
+            };
+            window.siteLanguage = 'en';
+            window.techDescriptionsUz = {
+                'HTML': 'Har bir sahifa uchun semantik tuzilma.',
+                'CSS': 'Moslashuvchan dizayn, joylashuv va animatsiyalar.',
+                'JavaScript': 'Mantiq va interaktivlik.',
+                'React': 'Komponentlarga asoslangan interfeyslar.',
+                'Git': 'Loyiha versiyalarini boshqarish.',
+                'Tailwind': 'Tezkor dizayn uchun yordamchi sinflar.',
+                'Vite': 'Tezkor ishlab chiqish muhiti va yig‘ish vositasi.',
+                'Redux Toolkit': 'Katta ilovalar uchun holat boshqaruvi.',
+                'React Query': 'Server ma’lumotlarini keshlash va sinxronlash.',
+                'Zustand': '3D va interfeyslar uchun yengil holat boshqaruvi.',
+                'Node.js': 'Backend ishlab chiqish uchun JavaScript muhiti.',
+                'SQL': 'Bog‘langan ma’lumotlar bazasi so‘rovlari va arxitekturasi.',
+                'Supabase': 'Ma’lumotlar bazasi, autentifikatsiya va fayllar ombori.',
+                'Firebase': 'Real vaqt ma’lumotlari va tizimga kirish.',
+                'REST API': 'OpenWeather kabi xizmatlardan ma’lumot olish.',
+                'Telegram Bots': 'Mijozlar uchun buyurtmalar va bildirishnomalar.',
+                'Leaflet': 'Interaktiv xaritalar va GPS yo‘nalishlari.',
+                'Three.js': 'Brauzer ichidagi 3D sahnalar.',
+                'React Three Fiber': 'SmartSpace’da ishlatilgan React 3D kutubxonasi.',
+                'GitHub': 'Kodni saqlash va loyihalarni joylashtirish.',
+                'Vercel': 'Avtomatik joylashtirish imkoniyatiga ega hosting.',
+                'Netlify': 'Tez ishga tushirish uchun statik hosting.'
+            };
+
+            function setLanguage(lang) {
+                var dictionary = translations[lang];
+                if (!dictionary) return;
+                window.siteLanguage = lang;
+                document.documentElement.lang = lang;
+                document.title = dictionary.pageTitle;
+                document.querySelectorAll('[data-i18n]').forEach(function (element) {
+                    var value = dictionary[element.dataset.i18n];
+                    if (value !== undefined) element.textContent = value;
+                });
+                document.querySelectorAll('.project-desc-toggle').forEach(function (button) {
+                    var state = button.getAttribute('aria-expanded') === 'true' ? 'hideDescription' : 'showDescription';
+                    button.textContent = dictionary[state];
+                });
+                document.querySelectorAll('[data-i18n-html]').forEach(function (element) {
+                    var value = dictionary[element.dataset.i18nHtml];
+                    if (value !== undefined) element.innerHTML = value;
+                });
+                document.querySelectorAll('[data-i18n-aria]').forEach(function (element) {
+                    var value = dictionary[element.dataset.i18nAria];
+                    if (value !== undefined) element.setAttribute('aria-label', value);
+                });
+                var menuToggle = document.getElementById('menuToggle');
+                if (menuToggle) {
+                    menuToggle.setAttribute('aria-label', menuToggle.getAttribute('aria-expanded') === 'true'
+                        ? (lang === 'uz' ? 'Menyuni yopish' : 'Close menu')
+                        : (lang === 'uz' ? 'Menyuni ochish' : 'Open menu'));
+                }
+                document.querySelectorAll('.lang-btn').forEach(function (button) {
+                    var active = button.dataset.lang === lang;
+                    button.classList.toggle('active', active);
+                    button.setAttribute('aria-pressed', active ? 'true' : 'false');
+                });
+                document.querySelectorAll('.track').forEach(function (track) {
+                    var items = (lang === 'uz' ? track.dataset.itemsUz : track.dataset.itemsEn).split('|');
+                    var content = items.map(function (item) { return '<span>' + item + '</span>'; }).join('');
+                    track.innerHTML = content + content + content;
+                });
+                var info = document.querySelector('.info');
+                if (info && info.classList.contains('show')) {
+                    var skill = info.querySelector('h3').textContent;
+                    info.querySelector('p').textContent = lang === 'uz' && window.techDescriptionsUz[skill]
+                        ? window.techDescriptionsUz[skill]
+                        : (window.techDescriptionsEn[skill] || '');
+                }
+            }
+
+            window.techDescriptionsEn = {
+                'HTML': 'Semantic structure behind every page.',
+                'CSS': 'Layouts, motion and responsive design.',
+                'JavaScript': 'Logic and interactivity.',
+                'React': 'Component-based interfaces.',
+                'Git': 'Version control for every project.',
+                'Tailwind': 'Utility-first styling, built fast.',
+                'Vite': 'Instant dev server and quick builds.',
+                'Redux Toolkit': 'State management for bigger apps.',
+                'React Query': 'Server data caching and syncing.',
+                'Zustand': 'Lightweight state for 3D and UI.',
+                'Node.js': 'JavaScript runtime environment for backend development.',
+                'SQL': 'Relational database queries and data architecture.',
+                'Supabase': 'Database, auth and file storage.',
+                'Firebase': 'Realtime data and sign-in.',
+                'REST API': 'Fetching data, like OpenWeather.',
+                'Telegram Bots': 'Orders and notifications for clients.',
+                'Leaflet': 'Interactive maps and GPS tracks.',
+                'Three.js': '3D scenes right in the browser.',
+                'React Three Fiber': 'React renderer for 3D, used in SmartSpace.',
+                'GitHub': 'Code hosting and deploys.',
+                'Vercel': 'Hosting with instant deploys.',
+                'Netlify': 'Static hosting for quick launches.'
+            };
+            document.querySelectorAll('.lang-btn').forEach(function (button) {
+                button.addEventListener('click', function () { setLanguage(button.dataset.lang); });
+            });
+            document.querySelectorAll('.project-desc-toggle').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var panel = document.getElementById(button.getAttribute('aria-controls'));
+                    var card = button.closest('.project-card');
+                    var open = button.getAttribute('aria-expanded') !== 'true';
+                    button.setAttribute('aria-expanded', open ? 'true' : 'false');
+                    panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+                    card.classList.toggle('is-open', open);
+                    button.textContent = translations[window.siteLanguage][open ? 'hideDescription' : 'showDescription'];
+                });
+            });
+            setLanguage('en');
+        })();
+    </script>
+    <script>
+        (function () {
+            var modal = document.getElementById('desktopModal');
+            var closeBtn = document.getElementById('modalCloseBtn');
+            var cancelBtn = document.getElementById('modalCancelBtn');
+            var proceedBtn = document.getElementById('modalProceedBtn');
+            var triggers = document.querySelectorAll('.js-shopplan-trigger');
+
+            function openModal(e) {
+                if (e) e.preventDefault();
+                if (!modal) return;
+                modal.classList.add('active');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                if (!modal) return;
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            }
+
+            triggers.forEach(function (btn) {
+                btn.addEventListener('click', openModal);
+            });
+
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            if (cancelBtn) cancelBtn.addEventListener('click', closeModal);
+            if (proceedBtn) proceedBtn.addEventListener('click', function () {
+                closeModal();
+            });
+
+            if (modal) {
+                modal.addEventListener('click', function (e) {
+                    if (e.target === modal) closeModal();
+                });
+            }
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        })();
+    </script>
+    <script>
+        (function () {
+            var toggle = document.getElementById('menuToggle');
+            var backdrop = document.getElementById('menuBackdrop');
+            var menu = document.getElementById('mainMenu');
+            if (!toggle || !menu) return;
+
+            function setOpen(open) {
+                document.body.classList.toggle('nav-open', open);
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                toggle.setAttribute('aria-label', open
+                    ? (window.siteLanguage === 'uz' ? 'Menyuni yopish' : 'Close menu')
+                    : (window.siteLanguage === 'uz' ? 'Menyuni ochish' : 'Open menu'));
+                document.body.style.overflow = open ? 'hidden' : '';
+            }
+
+            function closeMenu() { setOpen(false); }
+
+            toggle.addEventListener('click', function () {
+                setOpen(!document.body.classList.contains('nav-open'));
+            });
+            if (backdrop) backdrop.addEventListener('click', closeMenu);
+            menu.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', closeMenu);
+            });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeMenu();
+            });
+        })();
+    </script>
+</body>
+
+</html>
