@@ -1702,32 +1702,67 @@
                 ringCounts[r]++;
             });
 
-            var planets = [], hover = -1;
+            var planets = [], planetMeshes = [], hover = -1, active = -1;
             T.forEach(function (t, i) {
                 var c = new THREE.Color(t[2]);
                 var m = new THREE.Mesh(new THREE.SphereGeometry(.3, 24, 16), new THREE.MeshStandardMaterial({ color: c, emissive: c, emissiveIntensity: .35, roughness: .4 }));
+                m.userData.planetIndex = i;
                 world.add(m);
+                planetMeshes.push(m);
                 var sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: logo(t[0]), transparent: true, depthWrite: false })); sp.scale.set(.52, .52, 1); m.add(sp);
                 var el = document.createElement('div'); el.className = 'tag'; el.style.setProperty('--c', t[2]);
+                el.dataset.planetIndex = i;
                 el.innerHTML = '<i></i>' + t[0]; wrap.appendChild(el);
                 el.addEventListener('mouseenter', function () { setHover(i) });
                 el.addEventListener('mouseleave', function () { setHover(-1) });
-                el.addEventListener('touchstart', function () { setHover(hover === i ? -1 : i) }, { passive: true });
                 var posOnRing = ringIndices[i], totalOnRing = ringCounts[t[3]];
                 planets.push({ m: m, sp: sp, el: el, ring: t[3], base: (posOnRing / totalOnRing) * Math.PI * 2 + t[3] * .8 });
             });
             function setHover(i) {
                 hover = i;
-                planets.forEach(function (p, k) { p.el.classList.toggle('on', k === i) });
-                if (i >= 0) {
-                    var skill = T[i][0];
+                var focused = active >= 0 ? active : hover;
+                canvas.style.cursor = focused >= 0 ? 'pointer' : '';
+                planets.forEach(function (p, k) { p.el.classList.toggle('on', k === focused) });
+                if (focused >= 0) {
+                    var skill = T[focused][0];
                     var descriptions = window.siteLanguage === 'uz' ? window.techDescriptionsUz : window.techDescriptionsEn;
-                    info.style.setProperty('--c', T[i][2]);
+                    info.style.setProperty('--c', T[focused][2]);
                     info.querySelector('h3').textContent = skill;
-                    info.querySelector('p').textContent = descriptions[skill] || T[i][1];
+                    info.querySelector('p').textContent = descriptions[skill] || T[focused][1];
                 }
-                info.classList.toggle('show', i >= 0); hint.classList.toggle('hide', i >= 0);
+                info.classList.toggle('show', focused >= 0); hint.classList.toggle('hide', focused >= 0);
             }
+            var raycaster = new THREE.Raycaster(), pointer = new THREE.Vector2();
+            function getPlanetAt(event) {
+                var tag = event.target.closest ? event.target.closest('.tag') : null;
+                if (tag && wrap.contains(tag)) return Number(tag.dataset.planetIndex);
+                if (event.target !== canvas) return -1;
+                var rect = canvas.getBoundingClientRect();
+                if (!rect.width || !rect.height) return -1;
+                pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+                raycaster.setFromCamera(pointer, camera);
+                var intersections = raycaster.intersectObjects(planetMeshes, false);
+                return intersections.length ? intersections[0].object.userData.planetIndex : -1;
+            }
+            canvas.addEventListener('pointermove', function (event) {
+                if (active < 0) setHover(getPlanetAt(event));
+            });
+            canvas.addEventListener('pointerleave', function () {
+                setHover(-1);
+            });
+            document.addEventListener('click', function (event) {
+                if (active >= 0) {
+                    active = -1;
+                    setHover(-1);
+                    return;
+                }
+                var index = getPlanetAt(event);
+                if (index >= 0) {
+                    active = index;
+                    setHover(hover);
+                }
+            });
 
             var W = 1, H = 1, D = 15;
             function resize() {
@@ -1748,8 +1783,9 @@
             function loop() {
                 requestAnimationFrame(loop);
                 var dt = Math.min(clock.getDelta(), .05); if (!vis) return;
-                sf += ((hover >= 0 ? .08 : 1) - sf) * Math.min(1, dt * 5);
-                if (!reduce) { tm += dt * sf; spinT += dt * .35; }
+                var focused = active >= 0 || hover >= 0;
+                sf += ((focused ? 0 : 1) - sf) * Math.min(1, dt * 5);
+                if (!reduce) { tm += dt * sf; if (!focused) spinT += dt * .35; }
                 spin.rotation.y = spinT;
                 var rc = stage.getBoundingClientRect(), p = clamp(-rc.top / (rc.height - innerHeight), 0, 1);
                 var e = ease(p), open = ease(clamp(p * 2.2, 0, 1)), s = .3 + .7 * open;
@@ -1766,8 +1802,9 @@
                     var f = clamp((D + 7.2 - camera.position.distanceTo(v)) / 14.4, 0, 1);
                     v.project(camera);
                     var x = (v.x * .5 + .5) * W, y = (-v.y * .5 + .5) * H;
-                    pl.m.scale.setScalar((.8 + .5 * f) * (k === hover ? 1.5 : 1));
-                    pl.m.material.emissiveIntensity = k === hover ? .9 : .35;
+                    var focusedPlanet = active >= 0 ? active : hover;
+                    pl.m.scale.setScalar((.8 + .5 * f) * (k === focusedPlanet ? 1.5 : 1));
+                    pl.m.material.emissiveIntensity = k === focusedPlanet ? .9 : .35;
                     cam.copy(camera.position); pl.m.worldToLocal(cam).normalize().multiplyScalar(.32); pl.sp.position.copy(cam);
                     pl.el.style.transform = 'translate(' + (x + 12).toFixed(1) + 'px,' + (y - 14).toFixed(1) + 'px) scale(' + (.85 + .25 * f).toFixed(3) + ')';
                     pl.el.style.opacity = ((.3 + .7 * f) * fade).toFixed(3);
